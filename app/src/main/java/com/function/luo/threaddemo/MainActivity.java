@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     Button btScheduled;
     @BindView(R.id.bt_single)
     Button btSingle;
+    @BindView(R.id.bt_next)
+    Button btNext;
 
     /**
      * 声明自动生成
@@ -31,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //自动生成
         ButterKnife.bind(this);
     }
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param view
      */
-    @OnClick({R.id.bt_fixed, R.id.bt_cached, R.id.bt_scheduled, R.id.bt_single})
+    @OnClick({R.id.bt_fixed, R.id.bt_cached, R.id.bt_scheduled, R.id.bt_single,R.id.bt_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_fixed:
@@ -55,36 +56,41 @@ public class MainActivity extends AppCompatActivity {
             case R.id.bt_single:
                 singleInit();
                 break;
+            case R.id.bt_next:
+                SecondActivity.launch(MainActivity.this);
+                break;
             default:
         }
     }
-
     private void scheduledInit() {
         TheadPoolUtils.getScheduledThreadPool().execute(new Runnable() {
             @Override
             public void run() {
-                Log.d("LUO","scheduledInit======333");
+                Log.d("LUO", "scheduledInit======333");
             }
         });
     }
 
     private void cachedInit() {
-        TheadPoolUtils.getCashedThreadPool().execute(new Runnable() {
+        TheadPoolUtils.getCachedThreadPool().execute(new Runnable() {
             @Override
             public void run() {
-                Log.d("LUO","cachedInit======222");
+                Log.d("LUO", "cachedInit======222");
             }
         });
+
+
     }
 
     private void singleInit() {
         TheadPoolUtils.getSingleThread().execute(new Runnable() {
             @Override
             public void run() {
-                Log.d("LUO","singleInit======444");
+                Log.d("LUO", "singleInit======444");
             }
         });
     }
+
     private void fixedInit() {
 
 
@@ -92,12 +98,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Log.d("LUO","fixedInit======111");
+                Log.d("LUO", "fixedInit======111");
             }
         });
 
 
     }
+
 
 
 }
